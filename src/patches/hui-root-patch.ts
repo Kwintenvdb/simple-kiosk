@@ -1,5 +1,25 @@
 import { BehaviorSubject } from '../utils/behavior-subject';
 
+const huiRootStyle = `
+.header {
+    display: none !important;
+}
+
+hui-view-container {
+    padding-top: 0px !important;
+}
+`;
+
+/**
+ * The hui-root element contains a shadowRoot in which we will find the header
+ * and the hui-view-container element below it. We wait for the elements to exist,
+ * then hide the header and remove the extra top padding of the hui-view-container.
+ *
+ * @param constructor the constructor of the hui-root custom element, at define time
+ * @param userPromise the user information which we are retrieving asynchronously
+ * @param lovelaceConfig the dashboard config; so we know if this plugin is enabled, and for which users
+ * @returns the patched hui-root constructor
+ */
 export function patchHuiRootConstructor(
     constructor: CustomElementConstructor,
     userPromise: Promise<User>,
@@ -12,16 +32,16 @@ export function patchHuiRootConstructor(
 
         constructor(...params: any[]) {
             super(...params);
+            // Start observing this element at construction time.
+            // Ensures we get notified about the shadowRoot creation
+            // as quickly as possible.
             this.observeThenApplyStyles(this);
         }
 
         // Wait for user and config to be loaded, then wait for shadowRoot
         // to be created and add a new style element to it.
         private observeThenApplyStyles = async (element: Element) => {
-            console.info('observing element...', element);
-
             const user = await userPromise;
-            console.info('got user', user);
             this._unsubscribeToLovelaceConfig = lovelaceConfig.subscribe(config => {
                 console.info('got config', config);
 
@@ -35,18 +55,11 @@ export function patchHuiRootConstructor(
                     if (enabledForUser) {
                         this._observer = new MutationObserver(async () => {
                             if (element.shadowRoot) {
-                                console.info('element has shadowRoot', element);
+                                console.debug('Found hui-root shadowRoot, adding custom style', element);
                                 const shadowRoot = element.shadowRoot;
                                 const style = document.createElement('style');
-                                style.id = 'custom-kiosk-style';
-                                style.textContent = `
-                                            .header {
-                                                display: none !important;
-                                            }
-                                            hui-view-container {
-                                                padding-top: 0px !important;
-                                            }
-                                        `;
+                                style.id = 'simple-kiosk-style';
+                                style.textContent = huiRootStyle;
                                 shadowRoot.appendChild(style);
                             }
                         });

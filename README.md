@@ -40,6 +40,8 @@ kiosk_config:
     - user_b
 ```
 
+You can temporarily disable this plugin for a given dashboard page by appending the `disable_kiosk=true` query parameter to the URL. For example, if this is your current dashboard's URL: `http://homeassistant.local:8123/dashboard-my-dashboard/0`, change it to this and reload the page: `http://homeassistant.local:8123/dashboard-my-dashboard/0?disable_kiosk=true`
+
 ## Motivation
 
 This implementation is heavily simplified and not nearly as configurable as kiosk-mode. However, it is faster.

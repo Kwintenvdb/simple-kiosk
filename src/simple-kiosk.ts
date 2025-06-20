@@ -1,8 +1,16 @@
 import { BehaviorSubject } from './utils/behavior-subject';
 import { patchHuiRootConstructor } from './patches/hui-root-patch';
 import { getUserAsync } from './init/fetch-user';
+import { version } from '../package.json';
+
 
 async function main() {
+    console.info(
+        `%c Simple Kiosk \n%c Version ${version} `,
+        'color: white; font-weight: bold; background: dodgerblue',
+        'color: white; font-weight: bold; background: dimgray'
+    );
+
     // Use query param 'disable_kiosk' to temporarily disable simple kiosk on current page.
     const queryParams = new URLSearchParams(document.location.search);
     const disabled = queryParams.get('disable_kiosk');

@@ -1,17 +1,6 @@
-// function getUserAsync(): Promise<User> {
-//     const homeAssistant = document.querySelector('home-assistant') as HomeAssistantElement;
-//     // TODO maximum interval and error handling
-//     return new Promise((resolve, _) => {
-//         const t = setInterval(() => {
-//             if (homeAssistant.hass?.user) {
-//                 clearInterval(t);
-//                 resolve(homeAssistant.hass?.user);
-//             }
-//         }, 10);
-//     });
-// }
-
 // Asynchronously initialize the user object stored on home-assistant element.
+// Sadly uses a not-so-reliable polling approach, as a MutationObserver
+// approach did not seem to work here.
 export function getUserAsync(): Promise<User> {
     return new Promise((resolve, reject) => {
         const homeAssistant = document.querySelector('home-assistant') as any;
@@ -27,6 +16,7 @@ export function getUserAsync(): Promise<User> {
 
         const interval = setInterval(() => {
             if (homeAssistant.hass?.user) {
+                console.debug('Got user info', homeAssistant.hass.user);
                 clearInterval(interval);
                 resolve(homeAssistant.hass.user);
             } else if (++attempts >= maxAttempts) {
