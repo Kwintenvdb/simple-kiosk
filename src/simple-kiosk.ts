@@ -1,5 +1,6 @@
 import { BehaviorSubject } from './utils/behavior-subject';
 import { patchHuiRootConstructor } from './patches/hui-root-patch';
+import { getUserAsync } from './init/fetch-user';
 
 async function main() {
     // Use query param 'disable_kiosk' to temporarily disable simple kiosk on current page.
