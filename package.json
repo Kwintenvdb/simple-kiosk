@@ -1,0 +1,17 @@
+{
+    "name": "simple-kiosk",
+    "version": "1.0.0",
+    "main": "simple-kiosk.js",
+    "scripts": {
+        "type-check": "tsc --noEmit",
+        "build": "node esbuild.config.mjs"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "esbuild": "^0.25.5",
+        "typescript": "^5.8.3"
+    }
+}
