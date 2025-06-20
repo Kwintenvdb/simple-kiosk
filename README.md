@@ -1,5 +1,9 @@
 # Simple Kiosk for Home Assistant
 
+[![HACS validation](https://github.com/Kwintenvdb/simple-kiosk/actions/workflows/validate-hacs.yml/badge.svg)](https://github.com/Kwintenvdb/simple-kiosk/actions/workflows/validate-hacs.yml)
+[![Release](https://img.shields.io/github/v/release/Kwintenvdb/simple-kiosk.svg)](https://github.com/Kwintenvdb/simple-kiosk/releases)
+
+
 Hides the Home Assistant header. Heavily inspired by the [kiosk-mode](https://github.com/NemesisRE/kiosk-mode) plugin, but faster and simpler. See [Motivation](#motivation).
 
 ## Installation
