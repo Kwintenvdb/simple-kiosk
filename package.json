@@ -1,6 +1,6 @@
 {
     "name": "simple-kiosk",
-    "version": "1.0.0",
+    "version": "0.1.1",
     "main": "simple-kiosk.js",
     "scripts": {
         "type-check": "tsc --noEmit",
