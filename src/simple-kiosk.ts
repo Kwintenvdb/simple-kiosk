@@ -37,13 +37,13 @@ function patchStyles(
         }
 
         if (name == 'ha-panel-lovelace') {
-            console.info('Intercepting ha-panel-lovelace at define-time');
+            console.debug('Intercepting ha-panel-lovelace at define-time');
 
             const proto = constructor.prototype;
             const origSetConfig = proto._setLovelaceConfig;
             proto._setLovelaceConfig = function (config: any, rawConfig: any, mode: any) {
                 origSetConfig.call(this, config, rawConfig, mode);
-                console.info('Lovelace config set!', config, rawConfig, mode);
+                console.debug('Intercepted Lovelace config', config);
                 lovelaceConfig.set(config);
             };
 
@@ -51,13 +51,13 @@ function patchStyles(
             // We try to patch it immediately... 
             const HaPanelLovelace = customElements.get('ha-panel-lovelace');
             if (HaPanelLovelace) {
-                console.log('ha-panel-lovelace already defined, patching...')
+                console.debug('ha-panel-lovelace already defined, patching...')
                 const proto = HaPanelLovelace.prototype;
                 if (!proto._setLovelaceConfig.__patched) {
                     const original = proto._setLovelaceConfig;
                     proto._setLovelaceConfig = function (config: any, raw: any, mode: any) {
                         original.call(this, config, raw, mode);
-                        console.info('Patched config:', config);
+                        console.debug('Intercepted Lovelace config', config);
                         lovelaceConfig.set(config);
                     };
                     proto._setLovelaceConfig.__patched = true;

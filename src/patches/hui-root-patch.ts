@@ -43,7 +43,7 @@ export function patchHuiRootConstructor(
         private observeThenApplyStyles = async (element: Element) => {
             const user = await userPromise;
             this._unsubscribeToLovelaceConfig = lovelaceConfig.subscribe(config => {
-                console.info('got config', config);
+                console.debug('Loaded config', config);
 
                 if (config.kiosk_config?.enabled) {
                     const enabledForUser =
